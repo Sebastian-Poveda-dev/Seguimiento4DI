@@ -2,7 +2,7 @@ package structures;
 
 public class HashMap <K, V> {
 
-    private int SIZE = 5;
+    private int SIZE = 7;
     private final float LOAD_FACTOR = 0.75f;
     private Entry<K,V>[] table;
     private int size;
@@ -35,7 +35,7 @@ public class HashMap <K, V> {
                 current = current.getNext();
             }
 
-            // La clave no existe, añadir al final de la lista
+            // Si la clave no existe, se añade  al final de la lista
             previous.next = new Entry<>(key, value);
             size++;
         }
@@ -54,7 +54,6 @@ public class HashMap <K, V> {
         size = 0;
         SIZE = newSize;
 
-        // Reinserta todos los elementos
         for (int i = 0; i < oldTable.length; i++) {
             Entry<K,V> entry = oldTable[i];
             while (entry != null) {
@@ -98,7 +97,7 @@ public class HashMap <K, V> {
             return entry;
         }
 
-        // Si no es el primero, buscar en la lista
+        // Si no es el primero
         Entry<K, V> previous = entry;
         entry = entry.getNext();
 

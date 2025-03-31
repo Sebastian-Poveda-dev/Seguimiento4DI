@@ -10,49 +10,33 @@ public class SubarraySum {
      * @return Arreglo con los índices [i, j] o [-1, -1] si no existe solución
      */
     public int[] findSubarrayWithSum(int[] arr, int S) {
-        // Vamos a usar un HashMap para almacenar la suma acumulada hasta cada índice
+        // HashMap porpio para almacenar la suma acumulada hasta cada índice donde la llave es la suma acumulada y el valor el índice
         HashMap<Integer, Integer> sumMap = new HashMap<>();
 
         int currentSum = 0;
 
-        // Verificar si algún subarreglo empezando desde el índice 0 tiene la suma S
-        for (int i = 0; i < arr.length; i++) {
-            // Añadir el elemento actual a la suma acumulada
-            currentSum += arr[i];
 
+        for (int i = 0; i < arr.length; i++) {
+
+            currentSum += arr[i];
+            // Verificar si algún subarreglo empezando desde el índice 0 tiene la suma S
             // Si la suma acumulada es igual a S, entonces el subarreglo es de 0 a i
             if (currentSum == S) {
                 return new int[]{0, i};
             }
 
-            // Si existe un subarreglo con suma (currentSum - S), entonces tenemos nuestro resultado
+            // Si existe un subarreglo con suma (currentSum - S), entonces el resultado son lso indices {((currentSum-S) + 1) , i}
             Integer prevIndex = sumMap.get(currentSum - S);
             if (prevIndex != null) {
                 int startIndex = prevIndex + 1;
                 return new int[]{startIndex, i};
             }
 
-            // Guardar la suma acumulada hasta este índice
+            // Para guardar la suma acumulada (llave) hasta el inidice (valor)
             sumMap.put(currentSum, i);
         }
 
         // Si no se encuentra ningún subarreglo, retornar [-1, -1]
-        return new int[]{-1, -1};
-    }
-
-    /**
-     * Solución alternativa usando fuerza bruta
-     */
-    public int[] findSubarrayWithSumBruteForce(int[] arr, int S) {
-        for (int i = 0; i < arr.length; i++) {
-            int sum = 0;
-            for (int j = i; j < arr.length; j++) {
-                sum += arr[j];
-                if (sum == S) {
-                    return new int[]{i, j};
-                }
-            }
-        }
         return new int[]{-1, -1};
     }
 
